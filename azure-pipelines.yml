@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'AH Tenant - Root Mgmt Group'
+    subscriptionId: '34ddcb84-9987-4faf-9960-e5742853cb94'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'rg-cynthia-test'
+    location: 'UK South'
+    templateLocation: 'Linked artifact'
+    csmFile: '/quickstarts/microsoft.compute/vm-simple-windows/azuredeploy.json'
+    csmParametersFile: '/quickstarts/microsoft.compute/vm-simple-windows/azuredeploy.parameters.json'
+    deploymentMode: 'Incremental'
